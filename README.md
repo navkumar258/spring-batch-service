@@ -30,6 +30,31 @@ A Spring Batch application demonstrating CSV processing with database persistenc
 - **Maven/Gradle** - Build tools
 - **Docker** - Containerization (optional)
 
+## 📚 Architecture
+
+The application follows a layered architecture pattern with clear separation of concerns:
+
+**Data Flow:**
+1. **CSV Input** → FlatFileItemReader reads CSV files
+2. **Processing** → ItemProcessor applies business logic
+3. **Output** → ItemWriter persists to database or publishes to Kafka
+4. **Metadata** → JobRepository tracks execution status
+5. **Monitoring** → Actuator endpoints provide metrics
+
+**Key Components:**
+- **Job**: Defines the overall batch process
+- **Step**: Individual processing unit within a job
+- **Chunk**: Configurable batch size for processing
+- **Reader**: Extracts data from CSV source
+- **Processor**: Transforms and validates data
+- **Writer**: Persists data to target systems
+- **Repository**: Stores job execution metadata
+
+**Error Handling:**
+- Retry mechanism for transient failures
+- Skip policy for invalid records
+- Comprehensive logging and monitoring
+
 ##️ Installation
 
 ### 1. Clone the Repository
@@ -101,11 +126,11 @@ docker run -p 8080:8080 spring-batch-service
 ## 📁 Project Structure
 
 The project follows a standard Spring Boot structure with batch-specific components:
-
+```
 src/
 ├── main/
 │ ├── java/
-│ │ └── com/batch-service/batch/
+│ │ └── com/example/spring/batch/service
 │ │ ├── config/
 │ │ │ ├── BatchConfig.java # Batch job configuration
 │ │ │ ├── DatabaseConfig.java # Database configuration
@@ -129,6 +154,7 @@ src/
 └── java/
 └── com/example/batch/
 └── BatchJobTest.java # Integration tests
+```
 
 **Key Components:**
 - **Config**: Contains all configuration classes for batch, database, and Kafka
@@ -436,31 +462,6 @@ mvn test
 # Start development server
 mvn spring-boot:run
 ```
-
-## ��️ Architecture
-
-The application follows a layered architecture pattern with clear separation of concerns:
-
-**Data Flow:**
-1. **CSV Input** → FlatFileItemReader reads CSV files
-2. **Processing** → ItemProcessor applies business logic
-3. **Output** → ItemWriter persists to database or publishes to Kafka
-4. **Metadata** → JobRepository tracks execution status
-5. **Monitoring** → Actuator endpoints provide metrics
-
-**Key Components:**
-- **Job**: Defines the overall batch process
-- **Step**: Individual processing unit within a job
-- **Chunk**: Configurable batch size for processing
-- **Reader**: Extracts data from CSV source
-- **Processor**: Transforms and validates data
-- **Writer**: Persists data to target systems
-- **Repository**: Stores job execution metadata
-
-**Error Handling:**
-- Retry mechanism for transient failures
-- Skip policy for invalid records
-- Comprehensive logging and monitoring
 
 ## 📄 License
 
